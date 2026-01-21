@@ -137,6 +137,34 @@
       </main>
     </div>
 
+    <div class="modal" id="compose-modal" aria-hidden="true">
+      <div class="modal__overlay" data-close="compose"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2>Nouveau message</h2>
+          <button class="btn btn--icon" type="button" data-close="compose">✕</button>
+        </div>
+        <form id="compose-form" class="compose">
+          <label class="compose__field">
+            Destinataire
+            <input type="text" name="to" placeholder="Vie scolaire, professeur, administration..." required />
+          </label>
+          <label class="compose__field">
+            Objet
+            <input type="text" name="subject" placeholder="Objet du message" required />
+          </label>
+          <label class="compose__field">
+            Message
+            <textarea name="body" rows="6" placeholder="Votre message..." required></textarea>
+          </label>
+          <div class="compose__actions">
+            <button class="btn btn--light" type="button" data-close="compose">Annuler</button>
+            <button class="btn btn--primary" type="submit">Envoyer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <template id="message-template">
       <article class="message">
         <div class="message__dot"></div>

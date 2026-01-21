@@ -126,6 +126,8 @@ const previewBody = document.getElementById("preview-body");
 const unreadCount = document.getElementById("unread-count");
 const folderInboxCount = document.getElementById("folder-inbox-count");
 const searchInput = document.getElementById("search");
+const composeModal = document.getElementById("compose-modal");
+const composeForm = document.getElementById("compose-form");
 
 const formatPreviewBody = (message) => {
   const paragraphs = message.body
@@ -238,6 +240,43 @@ const setFilter = (filter) => {
   renderList();
 };
 
+const setComposeModal = (open) => {
+  composeModal.classList.toggle("is-open", open);
+  composeModal.setAttribute("aria-hidden", String(!open));
+  if (open) {
+    composeForm.reset();
+    composeForm.querySelector("input[name='to']").focus();
+  }
+};
+
+const createMessage = ({ to, subject, body }) => {
+  const now = new Date();
+  const date = now.toLocaleDateString("fr-FR", {
+    weekday: "short",
+    day: "2-digit",
+    month: "2-digit",
+  });
+  const time = now.toLocaleTimeString("fr-FR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const formattedDate = `${date} • ${time}`;
+  const lines = body.split("\n").filter(Boolean);
+  return {
+    id: messages.length + 1,
+    sender: "K. Robinson",
+    role: "Élève",
+    subject,
+    preview: lines[0] ?? body.slice(0, 80),
+    body: lines.length ? lines : [body],
+    date: formattedDate,
+    to,
+    folder: "sent",
+    unread: false,
+    flagged: false,
+  };
+};
+
 const bindEvents = () => {
   document.querySelectorAll(".folder").forEach((button) => {
     button.addEventListener("click", () => setFolder(button.dataset.folder));
@@ -271,22 +310,54 @@ const bindEvents = () => {
   });
 
   document.getElementById("reply").addEventListener("click", () => {
-    alert("Réponse en cours de préparation.");
+    setComposeModal(true);
   });
   document.getElementById("reply-cta").addEventListener("click", () => {
-    alert("Réponse en cours de préparation.");
+    setComposeModal(true);
   });
   document.getElementById("forward").addEventListener("click", () => {
-    alert("Transfert en cours de préparation.");
+    setComposeModal(true);
   });
   document.getElementById("archive").addEventListener("click", () => {
-    alert("Message archivé.");
+    if (!state.selectedId) return;
+    const message = messages.find((item) => item.id === state.selectedId);
+    if (message) {
+      message.folder = "archived";
+      state.selectedId = null;
+      setFolder(state.folder);
+      updateCounts();
+    }
   });
   document.getElementById("delete").addEventListener("click", () => {
-    alert("Message supprimé.");
+    if (!state.selectedId) return;
+    const index = messages.findIndex((item) => item.id === state.selectedId);
+    if (index !== -1) {
+      messages.splice(index, 1);
+      state.selectedId = null;
+      renderList();
+      updateCounts();
+    }
   });
   document.getElementById("compose").addEventListener("click", () => {
-    alert("Ouverture du formulaire de nouveau message.");
+    setComposeModal(true);
+  });
+
+  composeForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(composeForm);
+    const to = formData.get("to").trim();
+    const subject = formData.get("subject").trim();
+    const body = formData.get("body").trim();
+    const newMessage = createMessage({ to, subject, body });
+    messages.unshift(newMessage);
+    setComposeModal(false);
+    setFolder("sent");
+    renderPreview(newMessage);
+    updateCounts();
+  });
+
+  composeModal.querySelectorAll("[data-close='compose']").forEach((button) => {
+    button.addEventListener("click", () => setComposeModal(false));
   });
 };
 
