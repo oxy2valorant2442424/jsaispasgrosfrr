@@ -6,6 +6,7 @@
   --blue-100: #e7f0fb;
   --grey-900: #1c2430;
   --grey-600: #64748b;
+  --grey-300: #cbd5f5;
   --grey-200: #e2e8f0;
   --grey-100: #f8fafc;
   --white: #ffffff;
@@ -265,7 +266,7 @@ a {
 
 .board {
   display: grid;
-  grid-template-columns: 240px 360px 1fr;
+  grid-template-columns: 240px 380px 1fr;
   gap: 20px;
   background: var(--white);
   border-radius: 16px;
@@ -371,11 +372,17 @@ a {
   border: 1px solid transparent;
   background: #fff;
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  cursor: pointer;
 }
 
 .message.is-unread {
   border-color: var(--blue-500);
   background: var(--blue-100);
+}
+
+.message.is-selected {
+  border-color: var(--blue-700);
+  background: #eef4ff;
 }
 
 .message__dot {
@@ -401,6 +408,38 @@ a {
 
 .message__preview {
   font-size: 12px;
+  color: var(--grey-600);
+}
+
+.message__tags {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  background: #fff0f6;
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.tag--neutral {
+  background: #eef2ff;
+  color: #4c51bf;
+}
+
+.empty {
+  padding: 16px;
+  border: 1px dashed var(--grey-300);
+  border-radius: 12px;
+  text-align: center;
+  font-size: 13px;
   color: var(--grey-600);
 }
 
@@ -446,6 +485,7 @@ a {
   font-size: 14px;
   color: var(--grey-900);
   border: 1px solid var(--grey-200);
+  min-height: 200px;
 }
 
 .preview-body p + p {

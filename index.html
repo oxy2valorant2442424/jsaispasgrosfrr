@@ -25,14 +25,14 @@
         </nav>
       </div>
       <div class="topbar__right">
-        <button class="btn btn--ghost">Année précédente</button>
+        <button class="btn btn--ghost" type="button">Année précédente</button>
         <div class="profile">
           <div class="profile__avatar">KR</div>
           <div class="profile__info">
             <span class="profile__name">K. Robinson</span>
             <span class="profile__role">Élève • 1ère B</span>
           </div>
-          <button class="btn btn--icon">▾</button>
+          <button class="btn btn--icon" type="button">▾</button>
         </div>
       </div>
     </header>
@@ -53,7 +53,7 @@
           <a class="menu-item" href="#"><span>⚙️</span> Paramètres</a>
         </nav>
         <div class="sidebar__footer">
-          <span class="sidebar__badge">51</span>
+          <span class="sidebar__badge" id="unread-count">51</span>
           <span class="sidebar__text">Non lus</span>
         </div>
       </aside>
@@ -65,12 +65,14 @@
             <p>Communiquez avec la vie scolaire, les enseignants et l'administration.</p>
           </div>
           <div class="content__actions">
-            <button class="btn btn--icon" aria-label="Rafraîchir">⟳</button>
+            <button class="btn btn--icon" type="button" aria-label="Rafraîchir" id="refresh">
+              ⟳
+            </button>
             <div class="search">
               <span class="search__icon">🔍</span>
-              <input type="text" placeholder="Rechercher un message" />
+              <input type="text" placeholder="Rechercher un message" id="search" />
             </div>
-            <button class="btn btn--primary">Nouveau message</button>
+            <button class="btn btn--primary" type="button" id="compose">Nouveau message</button>
           </div>
         </div>
 
@@ -78,129 +80,78 @@
           <div class="board__left">
             <div class="folders">
               <h2 class="section-title">Dossiers</h2>
-              <button class="folder folder--active">
+              <button class="folder folder--active" type="button" data-folder="inbox">
                 Boîte de réception
-                <span class="badge">51</span>
+                <span class="badge" id="folder-inbox-count">51</span>
               </button>
-              <button class="folder">Envoyés</button>
-              <button class="folder">Brouillons</button>
-              <button class="folder">Archivés</button>
-              <button class="folder">Notifications lycée</button>
+              <button class="folder" type="button" data-folder="sent">Envoyés</button>
+              <button class="folder" type="button" data-folder="drafts">Brouillons</button>
+              <button class="folder" type="button" data-folder="archived">Archivés</button>
+              <button class="folder" type="button" data-folder="school">Notifications lycée</button>
             </div>
             <div class="quick-actions">
               <h2 class="section-title">Accès rapide</h2>
-              <button class="btn btn--secondary">Créer un dossier</button>
-              <button class="btn btn--light">Paramétrage</button>
+              <button class="btn btn--secondary" type="button">Créer un dossier</button>
+              <button class="btn btn--light" type="button">Paramétrage</button>
             </div>
           </div>
 
           <div class="board__middle">
             <div class="list-toolbar">
-              <label><input type="checkbox" /> Tout sélectionner</label>
+              <label><input type="checkbox" id="select-all" /> Tout sélectionner</label>
               <div class="list-toolbar__filters">
-                <button class="chip is-active">Tous</button>
-                <button class="chip">Non lus</button>
-                <button class="chip">Favoris</button>
+                <button class="chip is-active" type="button" data-filter="all">Tous</button>
+                <button class="chip" type="button" data-filter="unread">Non lus</button>
+                <button class="chip" type="button" data-filter="flagged">Favoris</button>
               </div>
             </div>
-            <div class="message-list">
-              <article class="message is-unread">
-                <div class="message__dot"></div>
-                <div>
-                  <div class="message__row">
-                    <strong>Mme N. Duriez</strong>
-                    <span>mar. 20/01 • 14:09</span>
-                  </div>
-                  <p class="message__subject">Rappel rencontre lycée avec le parcours ALPHA JEUNE</p>
-                  <p class="message__preview">Merci de confirmer votre présence avant jeudi. Salle polyvalente A.</p>
-                </div>
-              </article>
-              <article class="message is-unread">
-                <div class="message__dot"></div>
-                <div>
-                  <div class="message__row">
-                    <strong>Mme N. Duriez</strong>
-                    <span>mar. 20/01 • 13:44</span>
-                  </div>
-                  <p class="message__subject">Rappel soirée lycée vendredi 24 janvier projet solidaire</p>
-                  <p class="message__preview">Tenue correcte exigée. Début à 18h30, inscription obligatoire.</p>
-                </div>
-              </article>
-              <article class="message">
-                <div class="message__dot"></div>
-                <div>
-                  <div class="message__row">
-                    <strong>M. ou Mme E. Prof</strong>
-                    <span>mar. 20/01 • 09:38</span>
-                  </div>
-                  <p class="message__subject">UNSS Tennis de table</p>
-                  <p class="message__preview">Entraînement mercredi à 13h, gymnase principal. Matériel fourni.</p>
-                </div>
-              </article>
-              <article class="message">
-                <div class="message__dot"></div>
-                <div>
-                  <div class="message__row">
-                    <strong>Mme N. Jeancler</strong>
-                    <span>mar. 20/01 • 09:03</span>
-                  </div>
-                  <p class="message__subject">Webinaire de présentation du programme DUAL DIPLOMA</p>
-                  <p class="message__preview">Lien de connexion et ressources jointes dans ce message.</p>
-                </div>
-              </article>
-              <article class="message">
-                <div class="message__dot"></div>
-                <div>
-                  <div class="message__row">
-                    <strong>Mme S. Bouldejoudja</strong>
-                    <span>lun. 19/01 • 19:23</span>
-                  </div>
-                  <p class="message__subject">Information élèves de seconde – Prévention addictions</p>
-                  <p class="message__preview">Merci de transmettre l'autorisation parentale avant vendredi.</p>
-                </div>
-              </article>
-            </div>
+            <div class="message-list" id="message-list"></div>
           </div>
 
           <div class="board__right">
             <div class="preview-header">
               <div>
                 <span class="preview-header__label">Message sélectionné</span>
-                <h2>Rappel rencontre lycée avec le parcours ALPHA JEUNE</h2>
+                <h2 id="preview-subject">Sélectionnez un message</h2>
               </div>
               <div class="preview-actions">
-                <button class="btn btn--icon" aria-label="Répondre">↩</button>
-                <button class="btn btn--icon" aria-label="Archiver">🗄</button>
-                <button class="btn btn--icon" aria-label="Supprimer">🗑</button>
+                <button class="btn btn--icon" type="button" aria-label="Répondre" id="reply">↩</button>
+                <button class="btn btn--icon" type="button" aria-label="Archiver" id="archive">🗄</button>
+                <button class="btn btn--icon" type="button" aria-label="Supprimer" id="delete">🗑</button>
               </div>
             </div>
-            <div class="preview-meta">
-              <div>
-                <strong>De :</strong> Mme N. Duriez (Vie scolaire)
-              </div>
-              <div><strong>À :</strong> Classe 1ère B</div>
-              <div><strong>Date :</strong> mar. 20/01 à 14:09</div>
+            <div class="preview-meta" id="preview-meta">
+              <div><strong>De :</strong> -</div>
+              <div><strong>À :</strong> -</div>
+              <div><strong>Date :</strong> -</div>
             </div>
-            <div class="preview-body">
-              <p>Bonjour,</p>
-              <p>
-                Un rappel concernant la rencontre lycée avec le parcours ALPHA JEUNE prévue
-                jeudi à 17h. Merci de confirmer votre présence via la plateforme avant mercredi
-                18h. La réunion aura lieu en salle polyvalente A.
-              </p>
-              <p>
-                Pensez à apporter votre carnet de correspondance et votre badge d'accès.
-                Pour toute question, vous pouvez répondre directement à ce message.
-              </p>
-              <p class="signature">Cordialement,<br />Mme Duriez</p>
+            <div class="preview-body" id="preview-body">
+              <p>Sélectionnez un message dans la liste pour afficher son contenu.</p>
             </div>
             <div class="preview-footer">
-              <button class="btn btn--primary">Répondre</button>
-              <button class="btn btn--light">Transférer</button>
+              <button class="btn btn--primary" type="button" id="reply-cta">Répondre</button>
+              <button class="btn btn--light" type="button" id="forward">Transférer</button>
             </div>
           </div>
         </section>
       </main>
     </div>
+
+    <template id="message-template">
+      <article class="message">
+        <div class="message__dot"></div>
+        <div>
+          <div class="message__row">
+            <strong class="message__sender"></strong>
+            <span class="message__date"></span>
+          </div>
+          <p class="message__subject"></p>
+          <p class="message__preview"></p>
+          <div class="message__tags"></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
   </body>
 </html>
