@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messagerie • Espace Élève</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar__left">
+        <div class="brand">
+          <span class="brand__badge">Mon espace élève</span>
+          <span class="brand__school">Institution Sainte Marie</span>
+        </div>
+        <nav class="topbar__nav">
+          <a href="#">Actualités</a>
+          <a href="#">Emploi du temps</a>
+          <a href="#">Notes</a>
+          <a class="is-active" href="#">Messagerie</a>
+        </nav>
+      </div>
+      <div class="topbar__right">
+        <button class="btn btn--ghost" type="button">Année précédente</button>
+        <div class="profile">
+          <div class="profile__avatar">KR</div>
+          <div class="profile__info">
+            <span class="profile__name">K. Robinson</span>
+            <span class="profile__role">Élève • 1ère B</span>
+          </div>
+          <button class="btn btn--icon" type="button">▾</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar__header">
+          <div class="sidebar__avatar"></div>
+          <div class="sidebar__label">Mon espace élève</div>
+        </div>
+        <nav class="sidebar__menu">
+          <a class="menu-item" href="#"><span>🏠</span> Accueil</a>
+          <a class="menu-item" href="#"><span>👤</span> Profil</a>
+          <a class="menu-item is-active" href="#"><span>✉️</span> Messagerie</a>
+          <a class="menu-item" href="#"><span>📅</span> Agenda</a>
+          <a class="menu-item" href="#"><span>📚</span> Ressources</a>
+          <a class="menu-item" href="#"><span>🧾</span> Documents</a>
+          <a class="menu-item" href="#"><span>⚙️</span> Paramètres</a>
+        </nav>
+        <div class="sidebar__footer">
+          <span class="sidebar__badge" id="unread-count">51</span>
+          <span class="sidebar__text">Non lus</span>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div class="content__header">
+          <div>
+            <h1>Messagerie</h1>
+            <p>Communiquez avec la vie scolaire, les enseignants et l'administration.</p>
+          </div>
+          <div class="content__actions">
+            <button class="btn btn--icon" type="button" aria-label="Rafraîchir" id="refresh">
+              ⟳
+            </button>
+            <div class="search">
+              <span class="search__icon">🔍</span>
+              <input type="text" placeholder="Rechercher un message" id="search" />
+            </div>
+            <button class="btn btn--primary" type="button" id="compose">Nouveau message</button>
+          </div>
+        </div>
+
+        <section class="board">
+          <div class="board__left">
+            <div class="folders">
+              <h2 class="section-title">Dossiers</h2>
+              <button class="folder folder--active" type="button" data-folder="inbox">
+                Boîte de réception
+                <span class="badge" id="folder-inbox-count">51</span>
+              </button>
+              <button class="folder" type="button" data-folder="sent">Envoyés</button>
+              <button class="folder" type="button" data-folder="drafts">Brouillons</button>
+              <button class="folder" type="button" data-folder="archived">Archivés</button>
+              <button class="folder" type="button" data-folder="school">Notifications lycée</button>
+            </div>
+            <div class="quick-actions">
+              <h2 class="section-title">Accès rapide</h2>
+              <button class="btn btn--secondary" type="button">Créer un dossier</button>
+              <button class="btn btn--light" type="button">Paramétrage</button>
+            </div>
+          </div>
+
+          <div class="board__middle">
+            <div class="list-toolbar">
+              <label><input type="checkbox" id="select-all" /> Tout sélectionner</label>
+              <div class="list-toolbar__filters">
+                <button class="chip is-active" type="button" data-filter="all">Tous</button>
+                <button class="chip" type="button" data-filter="unread">Non lus</button>
+                <button class="chip" type="button" data-filter="flagged">Favoris</button>
+              </div>
+            </div>
+            <div class="message-list" id="message-list"></div>
+          </div>
+
+          <div class="board__right">
+            <div class="preview-header">
+              <div>
+                <span class="preview-header__label">Message sélectionné</span>
+                <h2 id="preview-subject">Sélectionnez un message</h2>
+              </div>
+              <div class="preview-actions">
+                <button class="btn btn--icon" type="button" aria-label="Répondre" id="reply">↩</button>
+                <button class="btn btn--icon" type="button" aria-label="Archiver" id="archive">🗄</button>
+                <button class="btn btn--icon" type="button" aria-label="Supprimer" id="delete">🗑</button>
+              </div>
+            </div>
+            <div class="preview-meta" id="preview-meta">
+              <div><strong>De :</strong> -</div>
+              <div><strong>À :</strong> -</div>
+              <div><strong>Date :</strong> -</div>
+            </div>
+            <div class="preview-body" id="preview-body">
+              <p>Sélectionnez un message dans la liste pour afficher son contenu.</p>
+            </div>
+            <div class="preview-footer">
+              <button class="btn btn--primary" type="button" id="reply-cta">Répondre</button>
+              <button class="btn btn--light" type="button" id="forward">Transférer</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal" id="compose-modal" aria-hidden="true">
+      <div class="modal__overlay" data-close="compose"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <h2>Nouveau message</h2>
+          <button class="btn btn--icon" type="button" data-close="compose">✕</button>
+        </div>
+        <form id="compose-form" class="compose">
+          <label class="compose__field">
+            Destinataire
+            <input type="text" name="to" placeholder="Vie scolaire, professeur, administration..." required />
+          </label>
+          <label class="compose__field">
+            Objet
+            <input type="text" name="subject" placeholder="Objet du message" required />
+          </label>
+          <label class="compose__field">
+            Message
+            <textarea name="body" rows="6" placeholder="Votre message..." required></textarea>
+          </label>
+          <div class="compose__actions">
+            <button class="btn btn--light" type="button" data-close="compose">Annuler</button>
+            <button class="btn btn--primary" type="submit">Envoyer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <template id="message-template">
+      <article class="message">
+        <div class="message__dot"></div>
+        <div>
+          <div class="message__row">
+            <strong class="message__sender"></strong>
+            <span class="message__date"></span>
+          </div>
+          <p class="message__subject"></p>
+          <p class="message__preview"></p>
+          <div class="message__tags"></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
